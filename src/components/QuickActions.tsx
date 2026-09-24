@@ -26,7 +26,7 @@ export function QuickActions() {
           return a.href.startsWith("/") ? (
             <Link key={a.en} href={a.href} className={`${tile} ${a.cls}`} data-reveal data-reveal-delay={String(i * 0.08)}>{inner}</Link>
           ) : (
-            <a key={a.en} href={a.href} target={a.external ? "_blank" : undefined} rel="noopener" className={`${tile} ${a.cls}`} data-reveal data-reveal-delay={String(i * 0.08)}>{inner}</a>
+            <a key={a.en} href={a.href} target={a.external ? "_blank" : undefined} rel="noopener noreferrer" className={`${tile} ${a.cls}`} data-reveal data-reveal-delay={String(i * 0.08)}>{inner}</a>
           );
         })}
       </div>

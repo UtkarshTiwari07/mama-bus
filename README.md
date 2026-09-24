@@ -23,6 +23,33 @@ npm run build    # static site in out/ — upload that folder to any host
 
 Page URLs end in `/` (e.g. `/routes/patna-to-gaya/`), which every host above serves correctly.
 
+## Security
+
+- **Headers** come from `vercel.json` (a static export ignores `next.config` headers): a Content-Security-Policy that allows only this site's own scripts, styles, fonts and images plus the Google Maps embed; `X-Frame-Options: DENY` / `frame-ancestors 'none'` (no clickjacking); `nosniff`; a strict Referrer-Policy; a Permissions-Policy that turns off camera, mic, location and payment; COOP/CORP; HSTS.
+- **No backend, no database, no secrets.** Nothing is stored; the booking form only builds a WhatsApp message (`encodeURIComponent`, 120-character cap per field) and opens wa.me.
+- `script-src` keeps `'unsafe-inline'` because Next's static export inlines its page data; there is no user-supplied HTML anywhere, and `unsafe-eval` is not allowed.
+- Run `npm audit --omit=dev` before each release (0 known vulnerabilities at the time of writing).
+
+## Rate limiting
+
+A static site has no endpoints of its own, so request limiting has to happen at Vercel's edge. Set it up once in the dashboard (the free Hobby plan allows one rule):
+
+1. Vercel → this project → **Firewall** → **Configure** → **+ New Rule**, name it `rate-limit-all`.
+2. **If** *Request Path* *starts with* `/`.
+3. **Then** *Rate Limit* → *Fixed Window*, **60 s**, **300 requests**, key **IP** → action **Default (429)**.
+4. **Save Rule** → **Review Changes** → **Publish**. Watch it on the Firewall overview; switch the action to *Log* first if you want to see the effect before blocking.
+
+Also in **Firewall**: keep Bot Protection on, and remember **Attack Challenge Mode** — one switch that puts every visitor through a browser check during an attack.
+
+In the site itself, the booking form and Book / quote buttons have a short cooldown (`src/lib/throttle.ts`) so repeated taps don't open WhatsApp again and again. That is anti-spam, not security.
+
+## Performance notes
+
+- No animation library: scroll effects are CSS driven by one IntersectionObserver (`src/components/Motion.tsx`); Lenis smooth scrolling loads lazily on desktop only.
+- The hero slideshow keeps at most two photos in the page and preloads the next one at the size the screen needs (`-1200` / `-1920` variants from `npm run variants`, each under a byte budget).
+- The interactive map's district shapes (`src/content/bihar-paths.json`) download only when the visitor nears the map; route pages share one cached `bihar-outline.svg`.
+- Both languages are in the HTML and CSS shows one, so switching language never re-renders the page.
+
 ## Where things live
 
 | What | File |

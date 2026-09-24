@@ -31,7 +31,7 @@ export function Nav() {
         <div className="mx-auto flex max-w-[1600px] items-center justify-between gap-4">
           <Link
             href="/"
-            className={`flex items-center gap-2.5 rounded-full bg-ivory/85 px-3 py-2 backdrop-blur-md transition-shadow duration-500 ${scrolled ? "shadow-[0_8px_30px_-12px_rgb(22_48_42/0.35)]" : ""}`}
+            className={`flex items-center gap-2.5 rounded-full bg-ivory/95 px-3 py-2 transition-shadow duration-500 ${scrolled ? "shadow-[0_8px_30px_-12px_rgb(22_48_42/0.35)]" : ""}`}
             aria-label={`${site.name} — home`}
           >
             <Sun className="size-8 text-sindoor" />
@@ -94,7 +94,7 @@ export function Nav() {
             <p className="hindi text-2xl text-turmeric">{site.taglineHi}</p>
             <LangToggle dark />
           </div>
-          <a href={waLink()} target="_blank" rel="noopener" tabIndex={open ? 0 : -1} className="eyebrow block rounded-full bg-sindoor px-6 py-4 text-center">
+          <a href={waLink()} target="_blank" rel="noopener noreferrer" tabIndex={open ? 0 : -1} className="eyebrow block rounded-full bg-sindoor px-6 py-4 text-center">
             <T hi="WhatsApp पर बुक करें" en="Book on WhatsApp" />
           </a>
           <a href={telLink} tabIndex={open ? 0 : -1} className="eyebrow block rounded-full border border-ivory/30 px-6 py-4 text-center">

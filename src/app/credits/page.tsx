@@ -18,7 +18,7 @@ export default function Credits() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={c.file} alt="" loading="lazy" className="aspect-[4/3] w-24 rounded-lg object-cover" />
               <p>
-                <a href={c.source} target="_blank" rel="noopener" className="font-display text-xl hover:text-sindoor">{c.title}</a>
+                <a href={c.source} target="_blank" rel="noopener noreferrer" className="font-display text-xl hover:text-sindoor">{c.title}</a>
                 <span className="block text-sm text-ink/60">by {c.author}</span>
               </p>
               <p className="eyebrow text-ink/60">{c.license}</p>

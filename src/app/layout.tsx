@@ -8,12 +8,14 @@ import { Motion } from "@/components/Motion";
 import { Preloader } from "@/components/Preloader";
 import { WhatsAppFab } from "@/components/WhatsAppFab";
 import { BottomBar } from "@/components/BottomBar";
-import { LangMain, LangProvider } from "@/i18n/LangProvider";
+import { LangProvider } from "@/i18n/LangProvider";
 
-const fraunces = Fraunces({ subsets: ["latin"], style: ["normal", "italic"], variable: "--font-fraunces", axes: ["opsz", "SOFT"] });
-const inter = Inter_Tight({ subsets: ["latin"], variable: "--font-inter-tight" });
-const mukta = Mukta({ subsets: ["devanagari", "latin"], weight: ["400", "500", "600", "700"], variable: "--font-mukta" });
-const tiro = Tiro_Devanagari_Hindi({ subsets: ["devanagari", "latin"], weight: "400", style: ["normal", "italic"], variable: "--font-tiro" });
+// Fewer font files: Fraunces on its default axes, Mukta in two weights, Tiro upright only.
+// Only the two faces used above the fold are preloaded.
+const fraunces = Fraunces({ subsets: ["latin"], style: ["normal", "italic"], variable: "--font-fraunces", display: "swap", preload: false });
+const inter = Inter_Tight({ subsets: ["latin"], variable: "--font-inter-tight", display: "swap" });
+const mukta = Mukta({ subsets: ["devanagari"], weight: ["400", "700"], variable: "--font-mukta", display: "swap" });
+const tiro = Tiro_Devanagari_Hindi({ subsets: ["devanagari"], weight: "400", variable: "--font-tiro", display: "swap", preload: false });
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -66,13 +68,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="hi" className={`${fraunces.variable} ${inter.variable} ${mukta.variable} ${tiro.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: bootScript }} />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
       </head>
-      <body className="grain">
+      <body>
         <LangProvider>
           <Preloader />
           <Nav />
-          <LangMain>{children}</LangMain>
+          <main>{children}</main>
           <Footer />
           <WhatsAppFab />
           <BottomBar />

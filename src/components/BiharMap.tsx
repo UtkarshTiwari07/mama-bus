@@ -2,11 +2,13 @@
 
 import { useEffect, useId, useState } from "react";
 import map from "@/content/bihar-map.json";
+import paths from "@/content/bihar-paths.json";
 import { cities, inr, routes, routeTitleBi } from "@/content/routes";
 import { haversineKm } from "@/lib/geo";
 import { districtPlace, placeGroups, PLACES, quote } from "@/lib/places";
 import { telLink, waLink } from "@/lib/whatsapp";
 import { useLang } from "@/i18n/LangProvider";
+import { useLinkCooldown } from "@/lib/throttle";
 import { T } from "@/i18n/T";
 import { PhoneIcon, Seats, WhatsAppIcon } from "./Icons";
 
@@ -27,8 +29,9 @@ const NETWORK = Array.from(new Map(routes.map((r) => [[r.from, r.to].sort().join
 // Where off-map UP places point to: the west edge, level with Banaras.
 const UP_EDGE = { x: map.cities.banaras.x - 40, y: map.cities.banaras.y - 60 };
 
-export function BiharMap() {
+export default function BiharMap() {
   const { lang } = useLang();
+  const guard = useLinkCooldown();
   const [from, setFrom] = useState<string>("patna");
   const [to, setTo] = useState<string>("gaya");
   const [picking, setPicking] = useState<"from" | "to">("from");
@@ -158,7 +161,7 @@ export function BiharMap() {
                       return (
                         <path
                           key={d.name}
-                          d={d.d}
+                          d={(paths as Record<string, string>)[d.name]}
                           role="button"
                           tabIndex={0}
                           aria-label={name}
@@ -237,7 +240,7 @@ export function BiharMap() {
             </div>
 
             {/* Trip planner */}
-            <div className="mt-6 rounded-3xl border border-ivory/15 bg-ivory/[0.05] p-5 backdrop-blur md:p-7">
+            <div className="mt-6 rounded-3xl border border-ivory/15 bg-ivory/[0.07] p-5 md:p-7">
               <div className="grid gap-4 md:grid-cols-[1fr_auto_1fr] md:items-end">
                 <div>
                   <label htmlFor={ids.from} className="mb-2 block font-semibold text-ivory/70"><T hi="① कहाँ से?" en="① From" /></label>
@@ -267,7 +270,7 @@ export function BiharMap() {
                 {!same && (small.fare && large.fare ? (
                   <div className="mt-5 grid gap-3 sm:grid-cols-2">
                     {[small, large].map((q) => (
-                      <a key={q.fare!.seats} href={waLink(q.message)} target="_blank" rel="noopener" className="group flex items-center justify-between gap-4 rounded-2xl bg-ivory p-4 text-ink transition-transform hover:-translate-y-0.5">
+                      <a key={q.fare!.seats} href={waLink(q.message)} target="_blank" rel="noopener noreferrer" onClick={guard} className="group flex items-center justify-between gap-4 rounded-2xl bg-ivory p-4 text-ink transition-transform hover:-translate-y-0.5">
                         <span>
                           <Seats n={q.fare!.seats} className="text-ink/60" />
                           <span className="block font-semibold">{q.fare!.seats} <T hi="सीट वाली गाड़ी" en="seater car" /></span>
@@ -281,7 +284,7 @@ export function BiharMap() {
                   <div className="mt-5 flex flex-col gap-3 rounded-2xl bg-ivory/10 p-4 sm:flex-row sm:items-center sm:justify-between">
                     <p className="text-lg"><T hi="इस रूट का तय किराया हम WhatsApp पर तुरंत बताएँगे।" en="We'll send you a fixed fare for this route on WhatsApp." /></p>
                     <div className="flex gap-2">
-                      <a href={waLink(small.message)} target="_blank" rel="noopener" className="flex items-center gap-2 rounded-full bg-[#1f8f4e] px-5 py-3 font-bold text-white">
+                      <a href={waLink(small.message)} target="_blank" rel="noopener noreferrer" onClick={guard} className="flex items-center gap-2 rounded-full bg-[#1f8f4e] px-5 py-3 font-bold text-white">
                         <WhatsAppIcon className="size-5" /> <T hi="किराया पूछें" en="Get a quote" />
                       </a>
                       <a href={telLink} className="flex items-center gap-2 rounded-full bg-sindoor px-5 py-3 font-bold text-ivory">

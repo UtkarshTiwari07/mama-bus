@@ -7,10 +7,10 @@
     "build": "next build",
     "start": "npx serve out",
     "map": "node scripts/build-bihar-map.mjs",
-    "images": "node scripts/fetch-images.mjs"
+    "images": "node scripts/fetch-images.mjs",
+    "variants": "node scripts/make-variants.mjs"
   },
   "dependencies": {
-    "gsap": "^3.15.0",
     "lenis": "^1.3.26",
     "next": "^16.3.6",
     "react": "^19.3.0",

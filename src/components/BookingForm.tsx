@@ -4,6 +4,7 @@ import { useState } from "react";
 import { site } from "@/content/site";
 import { telLink, waLink } from "@/lib/whatsapp";
 import { useLang } from "@/i18n/LangProvider";
+import { useCooldown } from "@/lib/throttle";
 import { T } from "@/i18n/T";
 import { PhoneIcon, WhatsAppIcon } from "./Icons";
 
@@ -14,6 +15,7 @@ export function BookingForm() {
   const { lang } = useLang();
   const hi = lang === "hi";
   const [trip, setTrip] = useState<"one" | "round">("one");
+  const { run, cooling } = useCooldown(10_000);
 
   const submit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -22,7 +24,9 @@ export function BookingForm() {
     const lines = hi
       ? ["नमस्ते, मुझे गाड़ी बुक करनी है।", `नाम: ${f.get("name")}`, `कहाँ से: ${f.get("pickup")}`, `कहाँ तक: ${f.get("drop")}`, `तारीख़: ${f.get("date")}${f.get("time") ? `, समय: ${f.get("time")}` : ""}`, `गाड़ी: ${f.get("car")}`, `यात्रा: ${tripText}`, `कितने लोग: ${f.get("passengers")}`]
       : ["Hello, I want to book a cab.", `Name: ${f.get("name")}`, `Pickup: ${f.get("pickup")}`, `Drop: ${f.get("drop")}`, `Date: ${f.get("date")}${f.get("time") ? ` at ${f.get("time")}` : ""}`, `Car: ${f.get("car")}`, `Trip: ${tripText}`, `Passengers: ${f.get("passengers")}`];
-    window.open(waLink(lines.join("\n")), "_blank", "noopener");
+    // Keep each field short so a pasted wall of text can't bloat the message.
+    const clean = lines.map((l) => l.slice(0, 120)).join("\n");
+    run(() => window.open(waLink(clean), "_blank", "noopener,noreferrer"));
   };
 
   const cars = hi ? ["5 सीट (सेडान)", "7 सीट (अर्टिगा)", "7 सीट (इनोवा)"] : ["5 Seater (Sedan)", "7 Seater (Ertiga)", "7 Seater (Innova)"];
@@ -30,7 +34,7 @@ export function BookingForm() {
   return (
     <section id="book" className="relative overflow-hidden px-4 py-20 text-ivory md:px-8 md:py-32">
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/images/hero/gandhi-setu-1200.webp" alt="" loading="lazy" className="absolute inset-0 h-full w-full object-cover" data-parallax="0.1" />
+      <img src="/images/hero/gandhi-setu-1200.webp" alt="" loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
       <div className="absolute inset-0 bg-ink/85" />
       <div className="relative mx-auto grid max-w-[1400px] gap-12 lg:grid-cols-[1fr_1.2fr]">
         <div>
@@ -48,14 +52,14 @@ export function BookingForm() {
             <a href={telLink} className="flex items-center justify-center gap-3 rounded-full bg-sindoor px-7 py-4 text-lg font-bold">
               <PhoneIcon /> {site.phone}
             </a>
-            <a href={waLink()} target="_blank" rel="noopener" className="flex items-center justify-center gap-3 rounded-full bg-[#1f8f4e] px-7 py-4 text-lg font-bold text-white">
+            <a href={waLink()} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-3 rounded-full bg-[#1f8f4e] px-7 py-4 text-lg font-bold text-white">
               <WhatsAppIcon /> WhatsApp
             </a>
           </div>
           <a href={`mailto:${site.email}`} className="mt-4 block text-ivory/70 hover:text-ivory">{site.email}</a>
         </div>
 
-        <form onSubmit={submit} className="grid gap-5 rounded-[2rem] border border-ivory/15 bg-ivory/[0.06] p-6 backdrop-blur-md md:grid-cols-2 md:p-10" data-reveal>
+        <form onSubmit={submit} className="grid gap-5 rounded-[2rem] border border-ivory/15 bg-ivory/[0.09] p-6 md:grid-cols-2 md:p-10" data-reveal>
           <div className="md:col-span-2">
             <span className={label}><T hi="यात्रा" en="Trip type" /></span>
             <div className="flex rounded-full border-2 border-ivory/20 p-1" role="radiogroup" aria-label={hi ? "यात्रा" : "Trip type"}>
@@ -68,15 +72,15 @@ export function BookingForm() {
           </div>
           <div className="md:col-span-2">
             <label htmlFor="bk-name" className={label}><T hi="आपका नाम" en="Your name" /></label>
-            <input id="bk-name" name="name" required autoComplete="name" className={field} placeholder={hi ? "पूरा नाम" : "Full name"} />
+            <input id="bk-name" name="name" required maxLength={60} autoComplete="name" className={field} placeholder={hi ? "पूरा नाम" : "Full name"} />
           </div>
           <div>
             <label htmlFor="bk-pickup" className={label}><T hi="कहाँ से?" en="Pickup" /></label>
-            <input id="bk-pickup" name="pickup" required className={field} placeholder={hi ? "जैसे पटना जंक्शन" : "e.g. Patna Junction"} />
+            <input id="bk-pickup" name="pickup" required maxLength={80} className={field} placeholder={hi ? "जैसे पटना जंक्शन" : "e.g. Patna Junction"} />
           </div>
           <div>
             <label htmlFor="bk-drop" className={label}><T hi="कहाँ तक?" en="Drop" /></label>
-            <input id="bk-drop" name="drop" required className={field} placeholder={hi ? "जैसे बोधगया" : "e.g. Bodh Gaya"} />
+            <input id="bk-drop" name="drop" required maxLength={80} className={field} placeholder={hi ? "जैसे बोधगया" : "e.g. Bodh Gaya"} />
           </div>
           <div>
             <label htmlFor="bk-date" className={label}><T hi="तारीख़" en="Date" /></label>
@@ -96,8 +100,8 @@ export function BookingForm() {
             <label htmlFor="bk-pax" className={label}><T hi="कितने लोग?" en="Passengers" /></label>
             <input id="bk-pax" name="passengers" type="number" min={1} max={7} defaultValue={2} className={field} />
           </div>
-          <button type="submit" className="mt-2 flex items-center justify-center gap-3 rounded-full bg-[#1f8f4e] px-8 py-5 text-lg font-bold text-white transition-transform hover:scale-[1.02] md:col-span-2">
-            <WhatsAppIcon /> <T hi="WhatsApp पर भेजें" en="Send on WhatsApp" />
+          <button type="submit" disabled={cooling} className="mt-2 flex items-center justify-center gap-3 rounded-full bg-[#1f8f4e] px-8 py-5 text-lg font-bold text-white transition-transform hover:scale-[1.02] disabled:opacity-60 md:col-span-2">
+            <WhatsAppIcon /> {cooling ? <T hi="भेज दिया ✓ — WhatsApp देखें" en="Sent ✓ — check WhatsApp" /> : <T hi="WhatsApp पर भेजें" en="Send on WhatsApp" />}
           </button>
         </form>
       </div>

@@ -82,11 +82,7 @@ export const ShieldIcon = ({ className = "size-5" }: P) => (
   </svg>
 );
 
-/** A row of little people — seat count at a glance. */
+/** A row of little people — seat count at a glance. One element, painted by a repeating CSS mask in the current text colour. */
 export function Seats({ n, className = "" }: { n: number; className?: string }) {
-  return (
-    <span className={`inline-flex items-center gap-0.5 ${className}`} aria-hidden="true">
-      {Array.from({ length: n }, (_, i) => <PersonIcon key={i} className="size-3.5" />)}
-    </span>
-  );
+  return <span className={`seats inline-block h-[15px] align-middle ${className}`} style={{ width: n * 15 }} aria-hidden="true" />;
 }

@@ -29,7 +29,7 @@ export default function Contact() {
             <span className="text-lg font-semibold opacity-85"><T hi="कॉल करें" en="Call us" /></span>
             <span className="font-display text-3xl">{site.phone}</span>
           </a>
-          <a href={waLink()} target="_blank" rel="noopener" className="flex flex-col gap-3 rounded-[1.75rem] bg-[#1f8f4e] p-8 text-white transition-transform hover:-translate-y-1" data-reveal>
+          <a href={waLink()} target="_blank" rel="noopener noreferrer" className="flex flex-col gap-3 rounded-[1.75rem] bg-[#1f8f4e] p-8 text-white transition-transform hover:-translate-y-1" data-reveal>
             <WhatsAppIcon className="size-9" />
             <span className="text-lg font-semibold opacity-85">WhatsApp</span>
             <span className="font-display text-3xl"><T hi="मैसेज भेजें →" en="Chat now →" /></span>
@@ -48,12 +48,12 @@ export default function Contact() {
               <T b={site.address.line1} />,<br />
               <T b={site.address.city} /> {site.address.pin}
             </address>
-            <a href={`https://www.google.com/maps/search/?api=1&query=${mapQuery}`} target="_blank" rel="noopener" className="mt-7 inline-block rounded-full bg-sindoor px-6 py-3.5 font-bold">
+            <a href={`https://www.google.com/maps/search/?api=1&query=${mapQuery}`} target="_blank" rel="noopener noreferrer" className="mt-7 inline-block rounded-full bg-sindoor px-6 py-3.5 font-bold">
               <T hi="Google Maps में खोलें" en="Open in Google Maps" />
             </a>
           </div>
           <div className="min-h-[22rem] overflow-hidden rounded-[1.75rem] border border-ink/15" data-reveal>
-            <iframe title="Map" src={`https://www.google.com/maps?q=${mapQuery}&output=embed`} className="h-full min-h-[22rem] w-full" loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
+            <iframe title="Map" src={`https://www.google.com/maps?q=${mapQuery}&output=embed`} className="h-full min-h-[22rem] w-full" loading="lazy" referrerPolicy="strict-origin-when-cross-origin" sandbox="allow-scripts allow-same-origin allow-popups" />
           </div>
         </div>
       </section>

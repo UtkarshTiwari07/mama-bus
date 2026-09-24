@@ -19,7 +19,7 @@ export function Heritage() {
             en="Pind Daan at Gaya, the Mahabodhi, the ruins of Nalanda, the ghats of Kashi — we plan the drive, you keep the memories."
           />
         </p>
-        <a href={waLink("नमस्ते, मुझे तीर्थ यात्रा / टूर पैकेज की जानकारी चाहिए।")} target="_blank" rel="noopener" className="mt-7 inline-block rounded-full bg-sindoor px-7 py-4 text-lg font-bold text-ivory" data-reveal>
+        <a href={waLink("नमस्ते, मुझे तीर्थ यात्रा / टूर पैकेज की जानकारी चाहिए।")} target="_blank" rel="noopener noreferrer" className="mt-7 inline-block rounded-full bg-sindoor px-7 py-4 text-lg font-bold text-ivory" data-reveal>
           <T hi="यात्रा प्लान करवाएँ" en="Plan my trip" />
         </a>
       </div>

@@ -55,7 +55,7 @@ export default async function RoutePage({ params }: Props) {
             <p className="mt-3 text-ink/65"><T hi={`सीधी दूरी लगभग ${km} किमी · एक तरफ़ या आना-जाना`} en={`≈ ${km} km as the crow flies · one way or round trip`} /></p>
             <div className="mt-7 flex flex-wrap gap-3" data-reveal>
               <a href={telLink} className="flex items-center gap-2 rounded-full bg-sindoor px-6 py-4 text-lg font-bold text-ivory"><PhoneIcon /> <T hi="कॉल करें" en="Call" /></a>
-              <a href={waLink(`नमस्ते, मुझे ${from.hi} से ${to.hi} के लिए गाड़ी बुक करनी है।`)} target="_blank" rel="noopener" className="flex items-center gap-2 rounded-full bg-[#1f8f4e] px-6 py-4 text-lg font-bold text-white"><WhatsAppIcon /> WhatsApp</a>
+              <a href={waLink(`नमस्ते, मुझे ${from.hi} से ${to.hi} के लिए गाड़ी बुक करनी है।`)} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 rounded-full bg-[#1f8f4e] px-6 py-4 text-lg font-bold text-white"><WhatsAppIcon /> WhatsApp</a>
             </div>
           </div>
           <div data-reveal>
@@ -78,7 +78,7 @@ export default async function RoutePage({ params }: Props) {
                 <a
                   href={waLink(`नमस्ते, मुझे ${from.hi} से ${to.hi} के लिए ${f.seats} सीट वाली गाड़ी बुक करनी है (${inr(f.fare)}).`)}
                   target="_blank"
-                  rel="noopener"
+                  rel="noopener noreferrer"
                   className="mt-6 self-start animate-[nudge_2.4s_ease-in-out_infinite] rounded-full bg-sindoor px-7 py-4 text-lg font-bold transition-colors hover:bg-ivory hover:text-ink"
                 >
                   <T hi={`${f.seats} सीट बुक करें`} en={`Book ${f.seats} seater`} />

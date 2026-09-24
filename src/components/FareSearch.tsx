@@ -5,12 +5,14 @@ import { inr } from "@/content/routes";
 import { placeGroups, quote } from "@/lib/places";
 import { waLink, telLink } from "@/lib/whatsapp";
 import { useLang } from "@/i18n/LangProvider";
+import { useLinkCooldown } from "@/lib/throttle";
 import { T } from "@/i18n/T";
 import { PhoneIcon, Seats, WhatsAppIcon } from "./Icons";
 
 /** "Where from → where to" in two taps, with the fare shown straight away. */
 export function FareSearch() {
   const { lang } = useLang();
+  const guard = useLinkCooldown();
   const [from, setFrom] = useState("patna");
   const [to, setTo] = useState("gaya");
   const id = useId();
@@ -54,7 +56,8 @@ export function FareSearch() {
                 key={q.fare!.seats}
                 href={waLink(q.message)}
                 target="_blank"
-                rel="noopener"
+                rel="noopener noreferrer"
+                onClick={guard}
                 className="group rounded-2xl border-2 border-ink/10 bg-white p-3 text-center transition-colors hover:border-sindoor"
               >
                 <Seats n={q.fare!.seats} className="justify-center text-ink/60" />
@@ -68,7 +71,7 @@ export function FareSearch() {
           <div className="rounded-2xl bg-ivory-2 p-4">
             <p className="font-semibold"><T hi="इस रूट का किराया WhatsApp पर पूछें — कुछ ही मिनट में जवाब।" en="Ask for this route's fare on WhatsApp — we reply in minutes." /></p>
             <div className="mt-3 flex gap-2">
-              <a href={waLink(small.message)} target="_blank" rel="noopener" className="flex flex-1 items-center justify-center gap-2 rounded-full bg-[#1f8f4e] px-4 py-3 font-bold text-white">
+              <a href={waLink(small.message)} target="_blank" rel="noopener noreferrer" onClick={guard} className="flex flex-1 items-center justify-center gap-2 rounded-full bg-[#1f8f4e] px-4 py-3 font-bold text-white">
                 <WhatsAppIcon className="size-5" /> <T hi="किराया पूछें" en="Get fare" />
               </a>
               <a href={telLink} className="flex items-center justify-center gap-2 rounded-full bg-ink px-4 py-3 font-bold text-ivory">

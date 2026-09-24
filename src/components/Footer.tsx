@@ -15,7 +15,7 @@ export function Footer() {
             <Sun className="mb-6 size-14 text-turmeric" />
             <p className="hindi text-3xl text-turmeric">{site.taglineHi}</p>
             <p className="mt-3 max-w-xs text-ivory/80"><T b={site.tagline} />. <T hi="पटना से लोकल, बाहर, परिवार, ग्रुप और तीर्थ यात्रा।" en="Local, outstation, family, group and pilgrimage travel from Patna." /></p>
-            <a href={waLink()} target="_blank" rel="noopener" className="eyebrow mt-8 inline-block rounded-full bg-sindoor px-7 py-4 transition-colors hover:bg-ivory hover:text-ink">
+            <a href={waLink()} target="_blank" rel="noopener noreferrer" className="eyebrow mt-8 inline-block rounded-full bg-sindoor px-7 py-4 transition-colors hover:bg-ivory hover:text-ink">
               <T hi="WhatsApp पर बुक करें" en="Book on WhatsApp" />
             </a>
           </div>
@@ -29,7 +29,7 @@ export function Footer() {
             <p className="eyebrow mt-8 mb-3 text-ivory/55"><T hi="बात करें" en="Talk" /></p>
             <a href={telLink} className="block text-ivory/80 hover:text-turmeric">{site.phone}</a>
             <a href={`mailto:${site.email}`} className="block break-all text-ivory/80 hover:text-turmeric">{site.email}</a>
-            <a href={site.socials.facebook} target="_blank" rel="noopener" className="mt-3 block text-ivory/80 hover:text-turmeric">Facebook ↗</a>
+            <a href={site.socials.facebook} target="_blank" rel="noopener noreferrer" className="mt-3 block text-ivory/80 hover:text-turmeric">Facebook ↗</a>
           </div>
           <div>
             <p className="eyebrow mb-5 text-ivory/55"><T hi="पेज" en="Explore" /></p>

@@ -35,9 +35,3 @@ export function useT() {
   const { lang } = useLang();
   return useCallback((b: Bi | string) => (typeof b === "string" ? b : b[lang]), [lang]);
 }
-
-/** Remounts page content on language change so scroll animations re-split fresh text. */
-export function LangMain({ children }: { children: React.ReactNode }) {
-  const { lang } = useLang();
-  return <main key={lang}>{children}</main>;
-}

@@ -35,7 +35,7 @@ export function Hero() {
 
         <div className="relative mx-auto grid max-w-[1500px] gap-8 px-4 pt-8 pb-24 text-ivory md:grid-cols-[1.25fr_420px] md:items-center md:px-10 md:py-16">
           <div>
-            <p className="mb-3 inline-flex items-center gap-2 rounded-full bg-ivory/15 px-4 py-1.5 text-sm font-semibold backdrop-blur" data-reveal>
+            <p className="mb-3 inline-flex items-center gap-2 rounded-full bg-ivory/15 px-4 py-1.5 text-sm font-semibold" data-reveal>
               <span className="size-2 animate-pulse rounded-full bg-[#3ddc84]" />
               <T hi="24 घंटे चालू · अभी बुक करें" en="Open 24 hours · Book now" />
             </p>
@@ -52,7 +52,7 @@ export function Hero() {
               <a href={telLink} className="flex items-center gap-3 rounded-full bg-sindoor px-7 py-4 text-lg font-bold text-ivory shadow-lg transition-transform hover:scale-105">
                 <PhoneIcon /> <T hi="अभी कॉल करें" en="Call now" />
               </a>
-              <a href={waLink()} target="_blank" rel="noopener" className="flex items-center gap-3 rounded-full bg-[#1f8f4e] px-7 py-4 text-lg font-bold text-white shadow-lg transition-transform hover:scale-105">
+              <a href={waLink()} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 rounded-full bg-[#1f8f4e] px-7 py-4 text-lg font-bold text-white shadow-lg transition-transform hover:scale-105">
                 <WhatsAppIcon /> WhatsApp
               </a>
             </div>
