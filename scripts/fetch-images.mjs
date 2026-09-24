@@ -9,6 +9,8 @@ import sharp from "sharp";
 const IMAGES = [
   { out: "hero/ganga-ghat.webp", title: "File:The Evening View from Ghandhi Ghat Patna 01.jpg", width: 2400 },
   { out: "hero/gandhi-setu.webp", title: "File:Mahatma Gandhi Setu over River Ganga in Patna, Bihar on the SUPER MOON Night. 23 June..jpg", width: 2400 },
+  { out: "hero/kesariya.webp", title: "File:Buddhist Stupa at Kesariya at Champaran (east) district of Bihar, India. 13.jpg", width: 2400 },
+  { out: "hero/sasaram.webp", title: "File:Tomb of Sher Shah Suri, Sasaram, Bihar 03.jpg", width: 2400 },
   { out: "fleet/sedan.webp", title: "File:Maruti Suzuki Dzire VXi VVT (front).JPG", width: 2000 },
   { out: "fleet/ertiga.webp", title: "File:2022 Maruti Suzuki Ertiga LXi.jpg", width: 2000 },
   { out: "fleet/innova.webp", title: "File:Toyota Innova Crysta 2.4 Z front right.jpg", width: 2000 },
@@ -64,5 +66,15 @@ for (const img of IMAGES.filter((i) => !only.length || only.includes(i.out))) {
   console.log("✓", img.out);
   await sleep(4000);
 }
+// Lighter copies for phones: every image also gets a 1200px "-1200.webp" twin.
+for (const img of IMAGES) {
+  const src = path.join(root, "public/images", img.out);
+  const small = src.replace(/\.webp$/, "-1200.webp");
+  await fs.access(src).then(
+    () => sharp(src).resize({ width: 1200, withoutEnlargement: true }).webp({ quality: 74 }).toFile(small),
+    () => {},
+  );
+}
+
 credits.sort((a, b) => IMAGES.findIndex((i) => a.file.endsWith(i.out)) - IMAGES.findIndex((i) => b.file.endsWith(i.out)));
 await fs.writeFile(creditsPath, JSON.stringify(credits, null, 2) + "\n");

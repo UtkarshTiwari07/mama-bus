@@ -10,15 +10,17 @@
   --color-terracotta: #a65a3a;
   --color-mist: #d8dcd6;
 
-  --font-sans: var(--font-inter-tight), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
-  --font-hindi: var(--font-tiro), var(--font-fraunces), serif;
+  /* Latin face first; Devanagari characters fall through to the Hindi face. */
+  --font-sans: var(--font-inter-tight), var(--font-mukta), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-fraunces), var(--font-tiro), ui-serif, Georgia, serif;
+  --font-hindi: var(--font-tiro), var(--font-mukta), serif;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @layer base {
   html {
+    font-size: 106.25%; /* 17px base: easier to read on small phones */
     background: var(--color-ivory);
     color: var(--color-ink);
     -webkit-font-smoothing: antialiased;
@@ -68,6 +70,17 @@ html.lenis body {
   font-variation-settings: "opsz" 48, "SOFT" 40;
 }
 
+/* In Hindi, uppercase + wide tracking breaks conjuncts: keep labels plain and a touch larger. */
+html[lang="hi"] .eyebrow {
+  text-transform: none;
+  letter-spacing: 0.01em;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+html[lang="hi"] body {
+  line-height: 1.6;
+}
+
 @utility hindi {
   font-family: var(--font-hindi);
   font-feature-settings: normal;
@@ -107,6 +120,15 @@ html.lenis body {
   to { transform: translate3d(6%, -3%, 0) scale(1.08); }
 }
 
+/* Hero slideshow zoom */
+.kenburns {
+  animation: kenburns 7s ease-out both;
+}
+@keyframes kenburns {
+  from { transform: scale(1.14) translate3d(1.5%, 1%, 0); }
+  to { transform: scale(1.02) translate3d(0, 0, 0); }
+}
+
 /* Marquees */
 .marquee {
   display: flex;
@@ -130,7 +152,8 @@ html.js [data-reveal] {
 
 @media (prefers-reduced-motion: reduce) {
   .mist,
-  .marquee {
+  .marquee,
+  .kenburns {
     animation: none;
   }
   html.js [data-reveal] {

@@ -1,6 +1,8 @@
 import { Hero } from "@/components/Hero";
-import { Manifesto } from "@/components/Manifesto";
+import { QuickActions } from "@/components/QuickActions";
+import { TrustStrip } from "@/components/TrustStrip";
 import { BiharMap } from "@/components/BiharMap";
+import { HowToBook } from "@/components/HowToBook";
 import { Fleet } from "@/components/Fleet";
 import { RouteGrid } from "@/components/RouteGrid";
 import { Services } from "@/components/Services";
@@ -14,10 +16,12 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <Manifesto />
+      <TrustStrip />
+      <QuickActions />
       <BiharMap />
-      <Fleet />
+      <HowToBook />
       <RouteGrid />
+      <Fleet />
       <Stats />
       <Services />
       <Heritage />

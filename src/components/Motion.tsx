@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
+import { useLang } from "@/i18n/LangProvider";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
@@ -24,6 +25,7 @@ export const getLenis = () => lenis;
  */
 export function Motion() {
   const pathname = usePathname();
+  const { lang } = useLang();
 
   useEffect(() => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -142,7 +144,7 @@ export function Motion() {
       ctx.revert();
       splits.forEach((s) => s.revert());
     };
-  }, [pathname]);
+  }, [pathname, lang]);
 
   return null;
 }

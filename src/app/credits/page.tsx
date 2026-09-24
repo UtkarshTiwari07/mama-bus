@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/PageHeader";
 import credits from "@/content/credits.json";
+import { T } from "@/i18n/T";
 
 export const metadata: Metadata = { title: "Photo credits", robots: { index: false } };
 
 export default function Credits() {
   return (
     <>
-      <PageHeader eyebrow="Credits" title={<>Photo <em>credits</em></>}>
+      <PageHeader eyebrow="Credits" title={<T hi="फ़ोटो क्रेडिट" en="Photo credits" />}>
         Photographs are from Wikimedia Commons under the licences listed. Vehicle photos show the car models we run and are not photos of our own fleet.
       </PageHeader>
       <section className="px-4 pb-24 md:px-8">

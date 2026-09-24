@@ -4,68 +4,85 @@ import Link from "next/link";
 import { useState } from "react";
 import { cities, inr, routes, type Route } from "@/content/routes";
 import { waLink } from "@/lib/whatsapp";
+import { useLang } from "@/i18n/LangProvider";
+import { T } from "@/i18n/T";
+import { SearchIcon, Seats } from "./Icons";
 
-export function RouteGrid({ heading = true, list = routes }: { heading?: boolean; list?: Route[] }) {
-  const [size, setSize] = useState<"small" | "large">("small");
+export function RouteGrid({ heading = true, list = routes, search = true }: { heading?: boolean; list?: Route[]; search?: boolean }) {
+  const { lang } = useLang();
+  const [q, setQ] = useState("");
+  const needle = q.trim().toLowerCase();
+  const shown = needle
+    ? list.filter((r) => [r.from, r.to].some((c) => cities[c].name.toLowerCase().includes(needle) || cities[c].hi.includes(q.trim())))
+    : list;
+  const name = (c: Route["from"]) => (lang === "hi" ? cities[c].hi : cities[c].name);
 
   return (
-    <section id="routes" className="px-4 py-24 md:px-8 md:py-36">
+    <section id="routes" className="px-4 py-20 md:px-8 md:py-32">
       <div className="mx-auto max-w-[1400px]">
-        <div className="mb-12 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+        <div className="mb-10 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           {heading ? (
             <div>
-              <p className="eyebrow mb-5 text-sindoor">Fixed fares · <span className="hindi text-[0.95rem]">किराया</span></p>
-              <h2 className="font-display text-[12vw] leading-[0.92] font-light tracking-tight md:text-[5.5rem]" data-split>
-                Our most-booked <em>routes</em>
+              <p className="eyebrow mb-4 text-sindoor"><T hi="तय किराया" en="Fixed fares" /></p>
+              <h2 className="font-display text-[11vw] leading-[0.98] tracking-tight md:text-[5rem]" data-split>
+                <T hi="सबसे ज़्यादा बुक होने वाले रूट" en="Our most-booked routes" />
               </h2>
             </div>
           ) : <div />}
-          <div className="flex items-center gap-4">
-            <span className="eyebrow text-ink/50">Show fares for</span>
-            <div className="flex rounded-full border border-ink/15 p-1" role="radiogroup" aria-label="Car size">
-              {(["small", "large"] as const).map((s) => (
-                <button key={s} type="button" role="radio" aria-checked={size === s} onClick={() => setSize(s)} className={`eyebrow rounded-full px-5 py-2.5 transition-colors ${size === s ? "bg-ink text-ivory" : "text-ink/70 hover:text-ink"}`}>
-                  {s === "small" ? "5 seater" : "7 seater"}
-                </button>
-              ))}
-            </div>
-          </div>
+          {search && (
+            <label className="flex w-full items-center gap-3 rounded-full border-2 border-ink/15 bg-white px-5 py-3.5 focus-within:border-sindoor md:w-96">
+              <SearchIcon className="size-6 text-ink/60" />
+              <span className="sr-only"><T hi="अपना शहर खोजें" en="Search your city" /></span>
+              <input
+                type="search"
+                value={q}
+                onChange={(e) => setQ(e.target.value)}
+                placeholder={lang === "hi" ? "अपना शहर खोजें — जैसे गया" : "Search your city — e.g. Gaya"}
+                className="w-full bg-transparent text-lg outline-none placeholder:text-ink/45"
+              />
+            </label>
+          )}
         </div>
 
-        <ol className="border-t border-ink/15">
-          {list.map((r, i) => {
-            const fare = r[size];
-            return (
-              <li key={r.slug} className="group relative border-b border-ink/15" data-reveal>
-                <span className="absolute inset-0 origin-bottom scale-y-0 bg-ink transition-transform duration-500 ease-out-expo group-hover:scale-y-100" aria-hidden="true" />
-                <div className="relative grid grid-cols-[2.5rem_1fr_auto] items-center gap-x-4 gap-y-1 py-5 transition-colors duration-500 group-hover:text-ivory md:grid-cols-[4rem_1.3fr_1fr_auto_auto] md:py-7">
-                  <span className="text-sm text-ink/40 tabular-nums transition-colors group-hover:text-ivory/50">{String(i + 1).padStart(2, "0")}</span>
-                  <Link href={`/routes/${r.slug}/`} className="font-display text-2xl leading-tight md:text-4xl">
-                    {cities[r.from].name} <span className="text-sindoor transition-colors group-hover:text-turmeric">→</span> {cities[r.to].name}
-                    <span className="absolute inset-0" aria-hidden="true" />
-                  </Link>
-                  <span className="hindi col-start-2 row-start-2 text-sm text-ink/50 transition-colors group-hover:text-ivory/60 md:col-start-auto md:row-start-auto md:text-lg">
-                    {cities[r.from].hi} से {cities[r.to].hi}
-                  </span>
-                  <span className="col-start-3 row-span-2 row-start-1 text-right md:col-start-auto md:row-span-1 md:row-start-auto">
-                    <span className="eyebrow block text-[0.62rem] text-ink/45 group-hover:text-ivory/50">{fare.seats} seater</span>
-                    <span className="font-display text-2xl tabular-nums md:text-4xl">{inr(fare.fare)}</span>
-                  </span>
-                  <a
-                    href={waLink(`Hello, I want to book a ${fare.seats} seater from ${cities[r.from].name} to ${cities[r.to].name} (${inr(fare.fare)}).`)}
-                    target="_blank"
-                    rel="noopener"
-                    className="eyebrow relative z-10 hidden rounded-full border border-current px-5 py-3 transition-colors hover:border-sindoor hover:bg-sindoor md:inline-block"
-                  >
-                    Book
-                  </a>
+        {shown.length === 0 ? (
+          <p className="rounded-2xl bg-ivory-2 p-6 text-lg">
+            <T hi="यह शहर लिस्ट में नहीं है — पर हम वहाँ भी जाते हैं! " en="That city isn't listed — but we go there too! " />
+            <a href={waLink(lang === "hi" ? `नमस्ते, मुझे ${q} के लिए गाड़ी चाहिए।` : `Hello, I need a cab for ${q}.`)} target="_blank" rel="noopener" className="font-bold text-sindoor underline underline-offset-4">
+              <T hi="WhatsApp पर किराया पूछें" en="Ask the fare on WhatsApp" />
+            </a>
+          </p>
+        ) : (
+          <ul className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {shown.map((r) => (
+              <li key={r.slug} className="group flex flex-col rounded-[1.5rem] border-2 border-ink/10 bg-white p-5 transition-all duration-300 hover:-translate-y-1 hover:border-sindoor/40 hover:shadow-[0_20px_50px_-20px_rgb(22_48_42/0.35)]" data-reveal>
+                <Link href={`/routes/${r.slug}/`} className="flex items-center gap-2 font-display text-2xl leading-tight md:text-[1.7rem]">
+                  <span>{name(r.from)}</span>
+                  <span className="text-sindoor transition-transform duration-300 group-hover:translate-x-1">→</span>
+                  <span>{name(r.to)}</span>
+                </Link>
+                <div className="mt-4 grid flex-1 grid-cols-2 gap-3">
+                  {(["small", "large"] as const).map((size) => {
+                    const f = r[size];
+                    const msg = lang === "hi"
+                      ? `नमस्ते, मुझे ${cities[r.from].hi} से ${cities[r.to].hi} के लिए ${f.seats} सीट वाली गाड़ी बुक करनी है (${inr(f.fare)}).`
+                      : `Hello, I want to book a ${f.seats} seater from ${cities[r.from].name} to ${cities[r.to].name} (${inr(f.fare)}).`;
+                    return (
+                      <a key={size} href={waLink(msg)} target="_blank" rel="noopener" className="flex flex-col rounded-2xl bg-ivory p-3 transition-colors hover:bg-sindoor hover:text-ivory">
+                        <Seats n={f.seats} className="opacity-60" />
+                        <span className="mt-1 text-sm font-semibold opacity-80">{f.seats} <T hi="सीट" en="seater" /></span>
+                        <span className="font-display text-2xl font-semibold tabular-nums md:text-3xl">{inr(f.fare)}</span>
+                        <span className="mt-1 text-sm font-bold"><T hi="बुक करें →" en="Book →" /></span>
+                      </a>
+                    );
+                  })}
                 </div>
               </li>
-            );
-          })}
-        </ol>
-        <p className="mt-6 text-sm text-ink/55">One-way and round-trip available on every route. Don&apos;t see yours?{" "}
-          <Link href="/#map" className="underline decoration-sindoor underline-offset-4 hover:text-ink">Pick any two places on the map</Link> for a quote.
+            ))}
+          </ul>
+        )}
+        <p className="mt-6 text-ink/75">
+          <T hi="हर रूट पर एक तरफ़ और आना-जाना दोनों उपलब्ध। अपना रूट नहीं दिखा? " en="One way and round trip on every route. Don't see yours? " />
+          <Link href="/#map" className="font-semibold text-sindoor underline underline-offset-4"><T hi="नक्शे पर कोई भी दो जगह चुनिए" en="Pick any two places on the map" /></Link>
         </p>
       </div>
     </section>

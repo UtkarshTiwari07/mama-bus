@@ -3,53 +3,57 @@ import { PageHeader } from "@/components/PageHeader";
 import { BookingForm } from "@/components/BookingForm";
 import { site } from "@/content/site";
 import { telLink, waLink } from "@/lib/whatsapp";
+import { PhoneIcon, PinIcon, WhatsAppIcon } from "@/components/Icons";
+import { T } from "@/i18n/T";
 
 export const metadata: Metadata = {
-  title: "Contact",
-  description: `Call or WhatsApp ${site.phone} to book a cab in Patna or anywhere in Bihar. ${site.address.line1}, ${site.address.city} ${site.address.pin}.`,
+  title: "संपर्क · Contact",
+  description: `कॉल या WhatsApp करें ${site.phone} — पटना और पूरे बिहार में गाड़ी बुक करें। Call or WhatsApp to book a cab. ${site.address.line1.en}, ${site.address.city.en} ${site.address.pin}.`,
 };
 
-const mapQuery = encodeURIComponent(`${site.address.line1}, ${site.address.city}, ${site.address.state} ${site.address.pin}`);
+const mapQuery = encodeURIComponent(`${site.address.line1.en}, ${site.address.city.en}, ${site.address.state.en} ${site.address.pin}`);
 
 export default function Contact() {
-  const cards = [
-    { k: "Call us", v: site.phone, href: telLink },
-    { k: "WhatsApp", v: "Chat now →", href: waLink() },
-    { k: "Email us", v: site.email, href: `mailto:${site.email}` },
-  ];
   return (
     <>
-      <PageHeader eyebrow="Contact" hi="संपर्क करें" title={<>Say <em>namaste</em></>}>
-        Planning a trip from Patna? Reach us any time for cab bookings, tour packages and custom travel plans — we&apos;re on the road 24×7.
+      <PageHeader eyebrow={<T hi="संपर्क करें" en="Contact" />} title={<T hi="नमस्ते! बात कीजिए" en="Say namaste" />}>
+        <T
+          hi="पटना से कहीं जाना है? गाड़ी बुकिंग, टूर पैकेज या कोई भी सवाल — हम 24 घंटे आपके लिए हैं।"
+          en="Planning a trip from Patna? Reach us any time for cab bookings, tour packages and custom travel plans — we're on the road 24×7."
+        />
       </PageHeader>
-      <section className="px-4 pb-24 md:px-8">
-        <div className="mx-auto grid max-w-[1400px] gap-5 md:grid-cols-3">
-          {cards.map((c) => (
-            <a key={c.k} href={c.href} target={c.href.startsWith("http") ? "_blank" : undefined} rel="noopener" className="group rounded-[1.75rem] border border-ink/15 p-8 transition-colors hover:bg-ink hover:text-ivory" data-reveal>
-              <p className="eyebrow text-ink/50 group-hover:text-ivory/60">{c.k}</p>
-              <p className="mt-4 font-display text-2xl break-all md:text-3xl">{c.v}</p>
-            </a>
-          ))}
+      <section className="px-4 py-16 md:px-8">
+        <div className="mx-auto grid max-w-[1400px] gap-4 md:grid-cols-3">
+          <a href={telLink} className="flex flex-col gap-3 rounded-[1.75rem] bg-sindoor p-8 text-ivory transition-transform hover:-translate-y-1" data-reveal>
+            <PhoneIcon className="size-9" />
+            <span className="text-lg font-semibold opacity-85"><T hi="कॉल करें" en="Call us" /></span>
+            <span className="font-display text-3xl">{site.phone}</span>
+          </a>
+          <a href={waLink()} target="_blank" rel="noopener" className="flex flex-col gap-3 rounded-[1.75rem] bg-[#1f8f4e] p-8 text-white transition-transform hover:-translate-y-1" data-reveal>
+            <WhatsAppIcon className="size-9" />
+            <span className="text-lg font-semibold opacity-85">WhatsApp</span>
+            <span className="font-display text-3xl"><T hi="मैसेज भेजें →" en="Chat now →" /></span>
+          </a>
+          <a href={`mailto:${site.email}`} className="flex flex-col gap-3 rounded-[1.75rem] border-2 border-ink/15 p-8 transition-transform hover:-translate-y-1" data-reveal>
+            <span className="text-3xl" aria-hidden="true">✉</span>
+            <span className="text-lg font-semibold text-ink/70"><T hi="ईमेल" en="Email us" /></span>
+            <span className="font-display text-2xl break-all">{site.email}</span>
+          </a>
         </div>
-        <div className="mx-auto mt-5 grid max-w-[1400px] gap-5 lg:grid-cols-[1fr_2fr]">
+        <div className="mx-auto mt-4 grid max-w-[1400px] gap-4 lg:grid-cols-[1fr_2fr]">
           <div className="rounded-[1.75rem] bg-ink p-8 text-ivory" data-reveal>
-            <p className="eyebrow text-ivory/50">Find us at</p>
-            <address className="mt-4 font-display text-3xl leading-snug not-italic">
-              {site.address.line1},<br />
-              {site.address.city} {site.address.pin}
+            <PinIcon className="size-9 text-turmeric" />
+            <p className="mt-3 font-semibold text-ivory/70"><T hi="हमारा पता" en="Find us at" /></p>
+            <address className="mt-2 font-display text-3xl leading-snug not-italic">
+              <T b={site.address.line1} />,<br />
+              <T b={site.address.city} /> {site.address.pin}
             </address>
-            <a href={`https://www.google.com/maps/search/?api=1&query=${mapQuery}`} target="_blank" rel="noopener" className="eyebrow mt-8 inline-block rounded-full bg-sindoor px-6 py-3.5">
-              Open in Google Maps
+            <a href={`https://www.google.com/maps/search/?api=1&query=${mapQuery}`} target="_blank" rel="noopener" className="mt-7 inline-block rounded-full bg-sindoor px-6 py-3.5 font-bold">
+              <T hi="Google Maps में खोलें" en="Open in Google Maps" />
             </a>
           </div>
           <div className="min-h-[22rem] overflow-hidden rounded-[1.75rem] border border-ink/15" data-reveal>
-            <iframe
-              title="Map to our Patna office"
-              src={`https://www.google.com/maps?q=${mapQuery}&output=embed`}
-              className="h-full min-h-[22rem] w-full grayscale-[60%]"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
+            <iframe title="Map" src={`https://www.google.com/maps?q=${mapQuery}&output=embed`} className="h-full min-h-[22rem] w-full" loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
           </div>
         </div>
       </section>
