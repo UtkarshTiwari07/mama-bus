@@ -1,0 +1,32 @@
+export const fleet = [
+  {
+    key: "sedan",
+    name: "Sedan",
+    model: "Maruti Dzire or similar",
+    hi: "सेडान",
+    seats: 5,
+    type: "Sedan",
+    image: "/images/fleet/sedan.webp",
+    idealFor: "City rides, airport and station drops, couples and small families.",
+  },
+  {
+    key: "ertiga",
+    name: "Ertiga",
+    model: "Maruti Ertiga",
+    hi: "अर्टिगा",
+    seats: 7,
+    type: "MPV",
+    image: "/images/fleet/ertiga.webp",
+    idealFor: "Family tours, pilgrimages and outstation trips with luggage.",
+  },
+  {
+    key: "innova",
+    name: "Innova",
+    model: "Toyota Innova Crysta",
+    hi: "इनोवा",
+    seats: 7,
+    type: "Premium MPV",
+    image: "/images/fleet/innova.webp",
+    idealFor: "Long highway days, groups and anyone who wants the extra comfort.",
+  },
+] as const;
