@@ -9,7 +9,7 @@ import { T } from "@/i18n/T";
 
 export const metadata: Metadata = {
   title: "हमारे बारे में · About us",
-  description: `${site.nameHi} — पटना की टूर एंड ट्रेवल सेवा। ${site.name} is a Patna-based tour and travel service for local, outstation, family, group and pilgrimage journeys.`,
+  description: `${site.nameHi} — पटना की टूर एंड ट्रेवल सेवा। Patna-based taxis and tours: local, outstation, family, group and pilgrimage trips.`,
 };
 
 const offerings = [
