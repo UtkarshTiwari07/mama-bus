@@ -1,9 +1,9 @@
 export const site = {
-  name: "Avni Tour & Travels",
-  nameHi: "अवनी टूर एंड ट्रेवल्स",
-  short: "Avni",
+  name: "Anvi Tour & Travels",
+  nameHi: "अन्वी टूर एंड ट्रेवल्स",
+  short: "Anvi",
   /** Big display wordmark (hero, nav, footer). */
-  wordmark: "AVNI",
+  wordmark: "ANVI",
   tagline: { hi: "बिहार की अपनी, भरोसेमंद टैक्सी सेवा", en: "Bihar's own, trusted taxi service" },
   taglineHi: "दिल से बिहारी",
   url: "https://mama-bus.vercel.app",

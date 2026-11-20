@@ -10,7 +10,7 @@ const WORD = site.wordmark;
 export function Hero() {
   return (
     <section className="relative">
-      {/* Wordmark band — the letters of AVNI spread edge to edge, rising one after another */}
+      {/* Wordmark band — the letters of ANVI spread edge to edge, rising one after another */}
       <div className="px-3 pt-24 md:px-6 md:pt-28">
         <p className="eyebrow mb-2 flex items-center justify-between text-ink/65">
           <span><T hi="पटना · बिहार" en="Patna · Bihar" /></span>
