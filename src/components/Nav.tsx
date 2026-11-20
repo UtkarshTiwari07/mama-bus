@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { nav, site } from "@/content/site";
 import { telLink, waLink } from "@/lib/whatsapp";
-import { Sun } from "./Madhubani";
+import { EarthMark } from "./Madhubani";
 import { LangToggle, T } from "@/i18n/T";
 import { PhoneIcon } from "./Icons";
 
@@ -34,10 +34,10 @@ export function Nav() {
             className={`flex items-center gap-2.5 rounded-full bg-ivory/95 px-3 py-2 transition-shadow duration-500 ${scrolled ? "shadow-[0_8px_30px_-12px_rgb(22_48_42/0.35)]" : ""}`}
             aria-label={`${site.name} — home`}
           >
-            <Sun className="size-8 text-sindoor" />
+            <EarthMark className="size-8 text-sindoor" />
             <span className="leading-none">
-              <span className="block text-[0.8rem] font-semibold tracking-[0.22em]">SHRI SHYAM BABA</span>
-              <span className="hindi block text-[0.75rem] text-ink/70">श्री श्याम बाबा टूर एंड ट्रेवल्स</span>
+              <span className="block text-[0.95rem] font-extrabold tracking-[0.32em]">{site.wordmark}</span>
+              <span className="hindi block text-[0.75rem] text-ink/70">{site.nameHi}</span>
             </span>
           </Link>
 

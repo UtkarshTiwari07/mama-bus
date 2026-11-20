@@ -23,7 +23,7 @@ const IMAGES = [
   { out: "heritage/varanasi.webp", title: "File:Varanasi 2010 ghats3.jpg", width: 1600 },
 ];
 
-const UA = { "User-Agent": "ShriShyamBabaSiteBuild/1.0" };
+const UA = { "User-Agent": "AvniTravelsSiteBuild/1.0" };
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const strip = (s = "") => s.replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
 

@@ -1,10 +1,12 @@
 export const site = {
-  name: "Shri Shyam Baba Tour & Travels",
-  nameHi: "श्री श्याम बाबा टूर एंड ट्रेवल्स",
-  short: "Shri Shyam Baba",
+  name: "Avni Tour & Travels",
+  nameHi: "अवनी टूर एंड ट्रेवल्स",
+  short: "Avni",
+  /** Big display wordmark (hero, nav, footer). */
+  wordmark: "AVNI",
   tagline: { hi: "बिहार की अपनी, भरोसेमंद टैक्सी सेवा", en: "Bihar's own, trusted taxi service" },
   taglineHi: "दिल से बिहारी",
-  url: "https://shrishyambabatravel.in",
+  url: "https://mama-bus.vercel.app",
   phone: "+91 99344 13606",
   phoneRaw: "919934413606",
   email: "pratikgd0809@gmail.com",

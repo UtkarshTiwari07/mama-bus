@@ -1,6 +1,6 @@
 // Original line-art motifs in the spirit of Mithila (Madhubani) painting:
 // double-line borders filled with "kachni" hatching, the paired fish of good
-// fortune, the sun and the lotus. Drawn with currentColor so they theme freely.
+// fortune, the lotus and the Avni earth-and-road mark. Drawn with currentColor so they theme freely.
 
 type P = { className?: string };
 
@@ -45,26 +45,17 @@ export function FishPair({ className = "" }: P) {
   );
 }
 
-export function Sun({ className = "", draw = false }: P & { draw?: boolean }) {
-  const rays = Array.from({ length: 16 }, (_, i) => i * 22.5);
-  const d = draw ? { "data-draw": "" } : {};
+// Avni ("earth") brand mark: the round earth, a horizon, and a road running
+// into it whose two edges and the horizon together read as an "A".
+export function EarthMark({ className = "" }: P) {
   return (
     <svg className={className} viewBox="0 0 120 120" aria-hidden="true">
-      <circle cx="60" cy="60" r="22" fill="none" stroke="currentColor" strokeWidth="1.6" {...d} />
-      <circle cx="60" cy="60" r="15" fill="none" stroke="currentColor" strokeWidth="1" strokeDasharray="1.5 3" />
-      <circle cx="60" cy="60" r="5" fill="currentColor" />
-      {rays.map((a, i) => (
-        <path
-          key={a}
-          d={i % 2 ? "M60 30L60 18" : "M55 32L60 10L65 32"}
-          transform={`rotate(${a} 60 60)`}
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.4"
-          strokeLinejoin="round"
-          {...d}
-        />
-      ))}
+      <circle cx="60" cy="60" r="52" fill="none" stroke="currentColor" strokeWidth="3" />
+      <circle cx="60" cy="60" r="44" fill="none" stroke="currentColor" strokeWidth="1.4" strokeDasharray="2 4" />
+      <path d="M14 74H106" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+      <path d="M34 104L60 26L86 104" fill="none" stroke="currentColor" strokeWidth="5" strokeLinejoin="round" strokeLinecap="round" />
+      <path d="M60 82V88M60 95V102" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+      <path d="M22 86L30 80M20 96L32 88M90 80L98 86M88 88L100 96" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
     </svg>
   );
 }

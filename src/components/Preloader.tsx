@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { site } from "@/content/site";
 
 // First visit per session: the name of the land writes itself, then the curtain lifts.
 export function Preloader() {
@@ -13,7 +14,7 @@ export function Preloader() {
       return;
     }
     try {
-      sessionStorage.setItem("ssb-intro", "1");
+      sessionStorage.setItem("avni-intro", "1");
     } catch {}
     const t1 = setTimeout(() => setState("leave"), 1900);
     const t2 = setTimeout(() => setState("done"), 2900);
@@ -30,7 +31,7 @@ export function Preloader() {
       aria-hidden="true"
     >
       <p className="hindi animate-[intro_1.4s_cubic-bezier(0.16,1,0.3,1)_both] text-[22vw] leading-none text-turmeric md:text-[12rem]">बिहार</p>
-      <p className="eyebrow mt-6 animate-[intro_1.4s_0.35s_cubic-bezier(0.16,1,0.3,1)_both] text-ivory/70">Shri Shyam Baba · Tour &amp; Travels</p>
+      <p className="eyebrow mt-6 animate-[intro_1.4s_0.35s_cubic-bezier(0.16,1,0.3,1)_both] text-ivory/70">{site.name}</p>
       <style>{`@keyframes intro{from{opacity:0;transform:translateY(40px);filter:blur(12px)}to{opacity:1;transform:none;filter:none}}`}</style>
     </div>
   );
