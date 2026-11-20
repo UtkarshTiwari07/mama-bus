@@ -3,7 +3,7 @@ import { nav, site } from "@/content/site";
 import { routes, routeTitleBi } from "@/content/routes";
 import { T } from "@/i18n/T";
 import { telLink, waLink } from "@/lib/whatsapp";
-import { MadhubaniBorder, Sun } from "./Madhubani";
+import { EarthMark, MadhubaniBorder } from "./Madhubani";
 
 export function Footer() {
   return (
@@ -12,7 +12,7 @@ export function Footer() {
       <div className="mx-auto max-w-[1600px] px-4 pt-20 md:px-8">
         <div className="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
-            <Sun className="mb-6 size-14 text-turmeric" />
+            <EarthMark className="mb-6 size-14 text-turmeric" />
             <p className="hindi text-3xl text-turmeric">{site.taglineHi}</p>
             <p className="mt-3 max-w-xs text-ivory/80"><T b={site.tagline} />. <T hi="पटना से लोकल, बाहर, परिवार, ग्रुप और तीर्थ यात्रा।" en="Local, outstation, family, group and pilgrimage travel from Patna." /></p>
             <a href={waLink()} target="_blank" rel="noopener noreferrer" className="eyebrow mt-8 inline-block rounded-full bg-sindoor px-7 py-4 transition-colors hover:bg-ivory hover:text-ink">
@@ -51,7 +51,7 @@ export function Footer() {
         </div>
 
         <p aria-hidden="true" className="mt-20 flex justify-between font-sans text-[10.8vw] leading-[0.8] font-extrabold tracking-[-0.055em] text-ivory/[0.07] select-none">
-          {"SHRI SHYAM BABA".split(" ").map((w) => <span key={w}>{w}</span>)}
+          {site.wordmark.split("").map((w, i) => <span key={i}>{w}</span>)}
         </p>
         <div className="flex flex-col gap-2 border-t border-ivory/10 py-6 text-xs text-ivory/45 md:flex-row md:justify-between">
           <p>© {new Date().getFullYear()} {site.name}. All rights reserved.</p>

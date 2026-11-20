@@ -1,6 +1,6 @@
-# Shri Shyam Baba Tour & Travels — website
+# Avni Tour & Travels — website
 
-A Hindi-first, Bihar-flavoured rebuild of shrishyambabatravel.in: Next.js (static export) with Tailwind CSS v4, GSAP + Lenis motion, a changing photo hero, an interactive map of Bihar's 38 districts, and one-tap Call / WhatsApp booking everywhere.
+A Hindi-first, Bihar-flavoured travel site (live at https://mama-bus.vercel.app): Next.js (static export) with Tailwind CSS v4, GSAP + Lenis motion, a changing photo hero, an interactive map of Bihar's 38 districts, and one-tap Call / WhatsApp booking everywhere.
 
 The site opens in simple Hindi; the हिं / EN switch (nav and the phone bottom bar) flips every page to English and remembers the choice.
 
@@ -18,7 +18,7 @@ npm run build    # static site in out/ — upload that folder to any host
 
 - **Netlify Drop (easiest, free):** open https://app.netlify.com/drop and drag the `out` folder onto the page. You get a live link in seconds; sign up to keep it and add your own domain.
 - **Vercel:** `npx vercel out --prod` and follow the prompts.
-- **cPanel / shared hosting (e.g. for shrishyambabatravel.in):** upload everything *inside* `out/` to `public_html/`.
+- **cPanel / shared hosting (for a custom domain):** upload everything *inside* `out/` to `public_html/`.
 - **GitHub Pages:** push `out/` to a `gh-pages` branch (public repo, or a paid plan for private).
 
 Page URLs end in `/` (e.g. `/routes/patna-to-gaya/`), which every host above serves correctly.

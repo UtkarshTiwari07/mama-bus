@@ -14,7 +14,7 @@ export function RouteMap({ from, to }: { from: CityKey; to: CityKey }) {
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src="/bihar-outline.svg" alt="" width={map.width} height={map.height} className="h-auto w-full" />
       <svg viewBox={`0 0 ${map.width} ${map.height}`} className="absolute inset-0 h-full w-full" role="img" aria-label={`${a.hi} से ${b.hi} / ${a.name} to ${b.name}`}>
-        <path d={d} fill="none" stroke="#b3362b" strokeWidth="3.5" strokeLinecap="round" data-draw="" />
+        <path d={d} fill="none" stroke="#a3472b" strokeWidth="3.5" strokeLinecap="round" data-draw="" />
         {[a, b].map((c, i) => (
           <g key={c.name}>
             <circle cx={c.x} cy={c.y} r="16" className={`${i ? "fill-turmeric/30" : "fill-sindoor/25"} animate-pulse`} />

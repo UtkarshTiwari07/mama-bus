@@ -61,7 +61,7 @@ const jsonLd = {
 };
 
 // Hides [data-reveal] elements until GSAP takes over; falls back to visible if it never does.
-const bootScript = `document.documentElement.classList.add('js');try{if(localStorage.getItem('ssb-lang')==='en')document.documentElement.lang='en'}catch(e){}try{if(sessionStorage.getItem('ssb-intro')==='1'||matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('intro-seen')}catch(e){}setTimeout(function(){var d=document.documentElement;if(!d.classList.contains('motion'))d.classList.remove('js')},2500);`;
+const bootScript = `document.documentElement.classList.add('js');try{if(localStorage.getItem('avni-lang')==='en')document.documentElement.lang='en'}catch(e){}try{if(sessionStorage.getItem('avni-intro')==='1'||matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('intro-seen')}catch(e){}setTimeout(function(){var d=document.documentElement;if(!d.classList.contains('motion'))d.classList.remove('js')},2500);`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

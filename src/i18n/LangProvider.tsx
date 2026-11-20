@@ -7,7 +7,7 @@ export type Bi = { hi: string; en: string };
 
 const LangContext = createContext<{ lang: Lang; setLang: (l: Lang) => void }>({ lang: "hi", setLang: () => {} });
 
-export const STORAGE_KEY = "ssb-lang";
+export const STORAGE_KEY = "avni-lang";
 
 /** Hindi is the default. A saved English choice is applied by the boot script before paint. */
 export function LangProvider({ children }: { children: React.ReactNode }) {

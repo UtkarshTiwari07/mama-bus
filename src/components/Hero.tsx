@@ -5,12 +5,12 @@ import { Slideshow } from "./Slideshow";
 import { FareSearch } from "./FareSearch";
 import { PhoneIcon, WhatsAppIcon } from "./Icons";
 
-const WORD = "SHRI SHYAM BABA";
+const WORD = site.wordmark;
 
 export function Hero() {
   return (
     <section className="relative">
-      {/* Wordmark band — whole words animate so the font's kerning survives */}
+      {/* Wordmark band — the letters of AVNI spread edge to edge, rising one after another */}
       <div className="px-3 pt-24 md:px-6 md:pt-28">
         <p className="eyebrow mb-2 flex items-center justify-between text-ink/65">
           <span><T hi="पटना · बिहार" en="Patna · Bihar" /></span>
@@ -19,8 +19,8 @@ export function Hero() {
         </p>
         <h1 className="sr-only">{site.nameHi} — {site.name}</h1>
         <div aria-hidden="true" className="flex justify-between overflow-hidden font-sans text-[10.8vw] leading-[0.82] font-extrabold tracking-[-0.055em] text-ink md:text-[10.4vw]">
-          {WORD.split(" ").map((word, w) => (
-            <span key={word} className="inline-block animate-[rise_1.3s_cubic-bezier(0.16,1,0.3,1)_both] pb-[0.06em]" style={{ animationDelay: `${0.15 + w * 0.12}s` }}>
+          {WORD.split("").map((word, w) => (
+            <span key={w} className="inline-block animate-[rise_1.3s_cubic-bezier(0.16,1,0.3,1)_both] pb-[0.06em]" style={{ animationDelay: `${0.15 + w * 0.12}s` }}>
               {word}
             </span>
           ))}

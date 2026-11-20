@@ -149,8 +149,8 @@ export default function BiharMap() {
                 <svg viewBox={`0 0 ${map.width} ${map.height}`} className="h-auto w-[720px] max-w-none md:w-full md:max-w-full" role="group" aria-label={lang === "hi" ? "बिहार के 38 ज़िलों का नक्शा" : "Map of Bihar's 38 districts"}>
                   <defs>
                     <radialGradient id="glow" cx="50%" cy="50%" r="50%">
-                      <stop offset="0%" stopColor="#d6a23e" stopOpacity="0.55" />
-                      <stop offset="100%" stopColor="#d6a23e" stopOpacity="0" />
+                      <stop offset="0%" stopColor="#cf9a45" stopOpacity="0.55" />
+                      <stop offset="100%" stopColor="#cf9a45" stopOpacity="0" />
                     </radialGradient>
                   </defs>
 
@@ -191,7 +191,7 @@ export default function BiharMap() {
                         <path
                           key={r.slug}
                           d={arc(cities[r.from], cities[r.to])}
-                          stroke={hot ? "#d6a23e" : "rgb(214 162 62 / 0.45)"}
+                          stroke={hot ? "#cf9a45" : "rgb(207 154 69 / 0.45)"}
                           strokeWidth={hot ? 2.4 : 1.1}
                           data-draw=""
                           data-draw-delay={String(i * 0.06)}
@@ -201,7 +201,7 @@ export default function BiharMap() {
                     })}
                     {!same && (
                       <>
-                        <path id="sel-arc" key={`${from}-${to}`} d={arc(pt(a), pt(b), 0.3)} stroke="#b3362b" strokeWidth="3.2" strokeLinecap="round" strokeDasharray="1 9" className="animate-[dash_1.2s_linear_infinite]" />
+                        <path id="sel-arc" key={`${from}-${to}`} d={arc(pt(a), pt(b), 0.3)} stroke="#a3472b" strokeWidth="3.2" strokeLinecap="round" strokeDasharray="1 9" className="animate-[dash_1.2s_linear_infinite]" />
                         {/* A little car drives the chosen route */}
                         <g key={`car-${from}-${to}`}>
                           <circle r="9" fill="#f3eee4" />
