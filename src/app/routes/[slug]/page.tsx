@@ -11,6 +11,8 @@ import { TrustStrip } from "@/components/TrustStrip";
 import { HowToBook } from "@/components/HowToBook";
 import { PhoneIcon, Seats, WhatsAppIcon } from "@/components/Icons";
 import { T } from "@/i18n/T";
+import { site } from "@/content/site";
+import { businessId, jsonLdHtml } from "@/lib/schema";
 
 export const dynamicParams = false;
 export const generateStaticParams = () => routes.map((r) => ({ slug: r.slug }));
@@ -24,7 +26,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const f = cities[route.from];
   const t = cities[route.to];
   return {
-    title: `${f.hi} से ${t.hi} टैक्सी ${inr(route.small.fare)} · ${routeTitle(route)} cab`,
+    // English search phrase first, Hindi second; absolute so the long brand suffix is skipped.
+    title: { absolute: `${routeTitle(route)} taxi ${inr(route.small.fare)} · ${f.hi} से ${t.hi} · ${site.short}` },
     description: `${f.hi} से ${t.hi}: ${route.small.seats} सीट ${inr(route.small.fare)}, 7 सीट ${inr(route.large.fare)}। ${routeTitle(route)} taxi — one way or round trip, 24×7.`,
   };
 }
@@ -41,9 +44,37 @@ export default async function RoutePage({ params }: Props) {
     { ...route.small, car: fleet[0] },
     { ...route.large, car: fleet[1] },
   ];
+  const pageUrl = `${site.url}/routes/${route.slug}/`;
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: `${site.url}/` },
+        { "@type": "ListItem", position: 2, name: "Routes", item: `${site.url}/routes/` },
+        { "@type": "ListItem", position: 3, name: routeTitle(route), item: pageUrl },
+      ],
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "TaxiService",
+      name: `${routeTitle(route)} taxi`,
+      url: pageUrl,
+      provider: { "@id": businessId },
+      areaServed: [from.name, to.name],
+      offers: fares.map((f) => ({
+        "@type": "Offer",
+        name: `${f.seats}-seater`,
+        price: f.fare,
+        priceCurrency: "INR",
+        url: pageUrl,
+      })),
+    },
+  ];
 
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdHtml(jsonLd) }} />
       <section className="px-4 pt-32 pb-16 md:px-8 md:pt-44">
         <div className="mx-auto grid max-w-[1400px] gap-10 lg:grid-cols-[1.1fr_1fr] lg:items-center">
           <div>
