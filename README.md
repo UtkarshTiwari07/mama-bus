@@ -1,4 +1,4 @@
-# Avni Tour & Travels — website
+# Anvi Tour & Travels — website
 
 A Hindi-first, Bihar-flavoured travel site (live at https://mama-bus.vercel.app): Next.js (static export) with Tailwind CSS v4, GSAP + Lenis motion, a changing photo hero, an interactive map of Bihar's 38 districts, and one-tap Call / WhatsApp booking everywhere.
 

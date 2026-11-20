@@ -1,6 +1,6 @@
 // Original line-art motifs in the spirit of Mithila (Madhubani) painting:
 // double-line borders filled with "kachni" hatching, the paired fish of good
-// fortune, the lotus and the Avni earth-and-road mark. Drawn with currentColor so they theme freely.
+// fortune, the lotus and the Anvi earth-and-road mark. Drawn with currentColor so they theme freely.
 
 type P = { className?: string };
 
@@ -45,7 +45,7 @@ export function FishPair({ className = "" }: P) {
   );
 }
 
-// Avni ("earth") brand mark: the round earth, a horizon, and a road running
+// Anvi brand mark: the round earth, a horizon, and a road running
 // into it whose two edges and the horizon together read as an "A".
 export function EarthMark({ className = "" }: P) {
   return (
